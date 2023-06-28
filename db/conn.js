@@ -1,21 +1,15 @@
 require('dotenv').config()
-const { MongoClient } = require('mongodb')
+const mongoose = require('mongoose')
 
 const user = process.env.USER
 const password = process.env.PASS
-const uri = `mongodb+srv://${user}:${password}@clusterfirstdb.gpfb4a7.mongodb.net/?retryWrites=true&w=majority`
 
-const client = new MongoClient(uri)
+async function main(){
+    await mongoose.connect(`mongodb+srv://${user}:${password}@clusterfirstdb.gpfb4a7.mongodb.net/?retryWrites=true&w=majority`);
 
-async function run(){
-    try {
-        await client.connect()
-        console.log('Conectamos ao MongoDB!')
-    } catch (err) {
-        console.log(err)
-    }
+    console.log('Conectou ao banco com Mongoose!')
 }
 
-run()
+main().catch((err) => console.log(err))
 
-module.exports = client
+module.exports = mongoose
